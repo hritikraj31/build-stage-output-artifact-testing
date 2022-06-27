@@ -20,12 +20,12 @@ steps:
     command: |
       echo "Testing Output Artifacts Upload from Build Stage"
       echo "this is binary artifact" > binary_artifact1.txt
-      sleep 120s
+      sleep 60s
 
 outputArtifacts:
   - name: output1
     type: BINARY
     location: ${OCI_PRIMARY_SOURCE_DIR}/binary_artifact1.txt
-    registryId: ocid1.artifactrepository.oc1.iad.0.amaaaaaa34lgq7aadvfqw6lhkf6uulm4cgpf2jzlxuk4pf3b436bv5assnha
+    registryId: ocid1.artifactrepository.oc1.iad.0.amaaaaaab6fywtyaagyhthdt3ywtgyu5bbc445ai5x5yrwv5czhf6oclnijq
     path: target/binary_artifact1
     version: ${minor_version}
