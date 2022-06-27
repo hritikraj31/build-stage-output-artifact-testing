@@ -20,7 +20,7 @@ steps:
     command: |
       echo "Testing Output Artifacts Upload from Build Stage"
       echo "this is binary artifact" > binary_artifact1.txt
-      sleep 10000
+      sleep 120s
 
 outputArtifacts:
   - name: output1
