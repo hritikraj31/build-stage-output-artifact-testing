@@ -1,0 +1,31 @@
+version: 0.1
+component: build
+timeoutInSeconds: 6000
+runAs: root
+shell: bash
+env:
+  variables:
+    "minor_version" : "3.0"
+  exportedVariables:
+    - testEnv
+
+inputArtifacts:
+  - name: hello-dev-jar
+    location: /workspace/Source1/hello123.class
+
+steps:
+  - type: Command
+    name: "Build Source"
+    timeoutInSeconds: 4000
+    command: |
+      echo "Testing Output Artifacts Upload from Build Stage"
+      echo "this is binary artifact" > binary_artifact1.txt
+      sleep 10000
+
+outputArtifacts:
+  - name: output1
+    type: BINARY
+    location: ${OCI_PRIMARY_SOURCE_DIR}/binary_artifact1.txt
+    registryId: ocid1.artifactrepository.oc1.iad.0.amaaaaaa34lgq7aadvfqw6lhkf6uulm4cgpf2jzlxuk4pf3b436bv5assnha
+    path: target/binary_artifact1
+    version: ${minor_version}
