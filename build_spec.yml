@@ -6,6 +6,7 @@ shell: bash
 env:
   variables:
     "minor_version" : "3.0"
+    "repoId" : "ocid1.artifactrepository.oc1.phx.0.amaaaaaab6fywtyansanskq2n4g7jdec262mzywc4h4exiernwlgd2rit3ea"
   exportedVariables:
     - testEnv
 
@@ -19,13 +20,51 @@ steps:
     timeoutInSeconds: 4000
     command: |
       echo "Testing Output Artifacts Upload from Build Stage"
-      echo "this is binary artifact" > binary_artifact1.txt
-      sleep 60s
+      echo "This is binary artifact1" > binary_artifact1.txt
+      echo "This is binary artifact2" > binary_artifact2.txt
+      echo "This is binary artifact3" > binary_artifact3.txt
+      mkdir target
+      echo "This is binary artifact4" > target/binary_artifact4.txt
+      echo "Created all binary artifacts"
+      sleep 120s
+      echo "Sleep command exited"
+      docker build -t built_image .
+      echo "Docker Build Successful"
+      echo $(docker images) > target/images_output.txt
+      echo "Completed all steps"
 
 outputArtifacts:
   - name: output1
     type: BINARY
     location: ${OCI_PRIMARY_SOURCE_DIR}/binary_artifact1.txt
-    registryId: ocid1.artifactrepository.oc1.phx.0.amaaaaaab6fywtyansanskq2n4g7jdec262mzywc4h4exiernwlgd2rit3ea
+    registryId: ${repoId}
     path: target/binary_artifact1
+    version: ${minor_version}
+  - name: output2
+    type: BINARY
+    location: ${OCI_WORKSPACE_DIR}/binary_artifact2.txt
+    registryId: ${repoId}
+    path: target/binary_artifact2
+    version: ${minor_version}
+  - name: output3
+    type: BINARY
+    location: /workspace/Source/binary_artifact3.txt
+    registryId: ${repoId}
+    path: target/binary_artifact3
+    version: ${minor_version}
+  - name: output4
+    type: BINARY
+    location: target/binary_artifact4.txt
+    registryId: ${repoId}
+    path: target/binary_artifact4
+    version: ${minor_version}
+  - name: output5
+    type: DOCKER_IMAGE
+    location: built_image
+    imageUri: phx.ocir.io/idllbnfszw6v/hritik-test
+  - name: image_output.txt
+    type: BINARY
+    location: target/images_output.txt
+    registryId: ${repoId}
+    path: target/images_output.txt
     version: ${minor_version}
