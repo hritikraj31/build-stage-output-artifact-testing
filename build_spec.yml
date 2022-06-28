@@ -26,6 +26,7 @@ steps:
       mkdir target
       echo "This is binary artifact4" > target/binary_artifact4.txt
       echo "Created all binary artifacts"
+      docker build -t built_image .
       echo "Docker Build Successful"
       echo $(docker images) > target/images_output.txt
       echo "Completed all steps"
@@ -63,3 +64,7 @@ outputArtifacts:
     registryId: ${repoId}
     path: target/images_output.txt
     version: ${minor_version}
+  - name: output5
+    type: DOCKER_IMAGE
+    location: built_image
+    imageUri: phx.ocir.io/idllbnfszw6v/hritik-test
