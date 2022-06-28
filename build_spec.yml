@@ -62,7 +62,7 @@ outputArtifacts:
     type: DOCKER_IMAGE
     location: built_image
     imageUri: phx.ocir.io/idllbnfszw6v/hritik-test
-  - name: image_output.txt
+  - name: image_output
     type: BINARY
     location: target/images_output.txt
     registryId: ${repoId}
