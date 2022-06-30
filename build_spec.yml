@@ -40,7 +40,7 @@ outputArtifacts:
     registryId: ${repoId}
     path: target/binary_artifact1
     version: ${minor_version}
-  - name: output1
+  - name: output2
     type: BINARY
     location: ${OCI_WORKSPACE_DIR}/Source/binary_artifact2.txt
     registryId: ${repoId}
