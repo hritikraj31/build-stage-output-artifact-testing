@@ -35,6 +35,7 @@ steps:
       export UIM_DIGEST=$(sha256sum binary_artifact1.txt | cut -d " " -f 1)
       echo "Uim digest is $UIM_DIGEST"
       docker save -o built_image.tar built_image
+      docker save -o phx.ocir.io/idllbnfszw6v/hritik-test.tar phx.ocir.io/idllbnfszw6v/hritik-test
       export OCIR_DIGEST=$(sha256sum built_image.tar | cut -d " " -f 1)
       echo "OCIR digest is $OCIR_DIGEST"
       echo "ocir digest is"
