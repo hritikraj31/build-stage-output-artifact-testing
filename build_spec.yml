@@ -11,6 +11,7 @@ env:
     - testEnv
     - UIM_DIGEST
     - OCIR_DIGEST
+    - OCIR_D
 
 inputArtifacts:
   - name: hello-dev-jar
@@ -28,18 +29,17 @@ steps:
       mkdir target
       echo "This is binary artifact4" > target/binary_artifact4.txt
       echo "Created all binary artifacts"
-      docker build -t built_image -t phx.ocir.io/idllbnfszw6v/hritik-test .
+      docker build -t built_image .
       echo "Docker Build Successful"
       echo $(docker images) > target/images_output.txt
       echo "Completed all steps"
       export UIM_DIGEST=$(sha256sum binary_artifact1.txt | cut -d " " -f 1)
       echo "Uim digest is $UIM_DIGEST"
       docker save -o built_image.tar built_image
-      docker save -o phx.ocir.io/idllbnfszw6v/hritik-test.tar phx.ocir.io/idllbnfszw6v/hritik-test
       export OCIR_DIGEST=$(sha256sum built_image.tar | cut -d " " -f 1)
       echo "OCIR digest is $OCIR_DIGEST"
-      echo "ocir digest is"
-      sha256sum phx.ocir.io/idllbnfszw6v/hritik-test.tar
+      export OCIR_D=$(docker images --no-trunc -q built_image)
+      echo "Other ocir digest is $OCIR_D"
       sleep 5s
       echo "Sleep command exited"
 
