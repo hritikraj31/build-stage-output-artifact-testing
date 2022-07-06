@@ -30,7 +30,7 @@ steps:
       echo "Docker Build Successful"
       echo $(docker images) > target/images_output.txt
       echo "Completed all steps"
-      sleep 120s
+      sleep 5s
       echo "Sleep command exited"
 
 outputArtifacts:
