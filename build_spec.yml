@@ -9,6 +9,8 @@ env:
     "repoId" : "ocid1.artifactrepository.oc1.phx.0.amaaaaaab6fywtyansanskq2n4g7jdec262mzywc4h4exiernwlgd2rit3ea"
   exportedVariables:
     - testEnv
+    - UIM_DIGEST
+    - OCIR_DIGEST
 
 inputArtifacts:
   - name: hello-dev-jar
@@ -30,6 +32,11 @@ steps:
       echo "Docker Build Successful"
       echo $(docker images) > target/images_output.txt
       echo "Completed all steps"
+      export UIM_DIGEST=$(sha256sum binaryArtifact.txt | cut -d " " -f 1)
+      echo "Uim digest is $UIM_DIGEST"
+      docker save -o built_image_test.tar built_image
+      export OCIR_DIGEST=$(sha256sum built_image_test.tar | cut -d " " -f 1)
+      echo "OCIR digest is $OCIR_DIGEST"
       sleep 5s
       echo "Sleep command exited"
 
